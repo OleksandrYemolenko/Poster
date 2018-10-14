@@ -33,6 +33,7 @@ public class DishItem extends AppCompatActivity {
     public static List<DishItem> getDishItem() {
         ArrayList<DishItem> dishList = new ArrayList<>();
 
+
         // Передать в dishList список блюд с именем (title) и картиткой (img)
         dishList.add(new DishItem("Hot Dog", "https://www.micccp.com/wp/wp-content/uploads/2016/02/4111.jpg", "30.00₴"));
         dishList.add(new DishItem("Coffee", "https://million-wallpapers.ru/wallpapers/2/56/294040267495523.jpg", "25.00₴"));
