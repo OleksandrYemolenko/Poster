@@ -9,16 +9,13 @@
     android:layout_marginTop="8dp"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="10dp"
     card_view:cardElevation="3dp">
 
     <RelativeLayout
         android:layout_width="344dp"
-        android:layout_height="148dp"
+        android:layout_height="244dp"
         android:id="@+id/card_content"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:orientation="vertical">
 
         <TextView
@@ -27,14 +24,32 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="33dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:textColor="#000000"
             android:textSize="24dp"
             tools:text="Dish name" />
-        <ImageView
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="25dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="35dp"
+            tools:text="Dish name" />
+        <ImageView
+            android:layout_alignParentTop="true"
             android:id="@+id/imgD"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="150dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </RelativeLayout>

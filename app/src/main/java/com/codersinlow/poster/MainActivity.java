@@ -114,19 +114,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        private TextView title;
+        private TextView title, price;
         private ImageView image;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
+            price = (TextView) itemView.findViewById(R.id.price);
             title.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
+            price.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
             image = (ImageView) itemView.findViewById(R.id.imgD);
         }
 
         public void bind(DishItem recyclerItem) {
             title.setText(recyclerItem.getName());
+            price.setText(recyclerItem.getPrice());
             Picasso.with(context)
                     .load(recyclerItem.getURL())
                     .resize(400,400)                        // optional
