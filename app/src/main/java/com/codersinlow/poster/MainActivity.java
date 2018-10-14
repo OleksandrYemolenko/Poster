@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         public void bind(DishItem recyclerItem) {
             title.setText(recyclerItem.getName());
             price.setText(recyclerItem.getPrice());
+            image.setImageResource(R.drawable.pizza);
             Picasso.with(context)
                     .load(recyclerItem.getURL())
                     .resize(400,400)                        // optional
