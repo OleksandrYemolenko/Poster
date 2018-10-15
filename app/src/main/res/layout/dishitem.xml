@@ -43,7 +43,7 @@
             android:paddingRight="16dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="35dp"
-            tools:text="Dish name" />
+            tools:text="Dish price" />
         <ImageView
             android:elevation="3dp"
             android:layout_alignParentTop="true"
