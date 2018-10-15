@@ -45,7 +45,9 @@
             android:textSize="35dp"
             tools:text="Dish name" />
         <ImageView
+            android:elevation="3dp"
             android:layout_alignParentTop="true"
+            android:background="@drawable/no_img"
             android:id="@+id/imgD"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"

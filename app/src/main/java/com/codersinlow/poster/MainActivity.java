@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             title.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
             price.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
             image = (ImageView) itemView.findViewById(R.id.imgD);
-            image.setImageResource(R.drawable.pizza); //TODO check it
+            //image.setImageResource(R.drawable.no_img); //TODO check it
         }
 
         public void bind(DishItem recyclerItem) {
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             price.setText(recyclerItem.getPrice());
             Picasso.with(context)
                     .load(recyclerItem.getURL())
-                    .resize(400,400)                        // optional
+                                         // optional
                     .into(image);
         }
     }
