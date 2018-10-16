@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO add animation
+
 public class DishItem extends AppCompatActivity {
 
     private String title;

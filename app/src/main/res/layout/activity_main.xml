@@ -9,8 +9,25 @@
     android:orientation="vertical"
     android:background="#FAFAFA">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/dishRecView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+         android:id="@+id/dishRecView"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/colorBlack"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/colorBlack"
+        app:menu="@menu/bott_nav_m" />
 </LinearLayout>
