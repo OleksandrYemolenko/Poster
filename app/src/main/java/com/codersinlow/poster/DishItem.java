@@ -1,24 +1,22 @@
 package com.codersinlow.poster;
 
 import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO add animation
+public class DishItem {
 
-public class DishItem extends AppCompatActivity {
-
+    private boolean expanded;
     private String title;
     private String price;
     private String imgURL;
-    private Image img;
 
     DishItem(String title, String imgURL, String price) {
         this.title = title;
         this.price = price;
         this.imgURL = imgURL;
-       // File file = new File(@R.);
+        // File file = new File(@R.);
     }
 
     public String getName() {
@@ -30,6 +28,15 @@ public class DishItem extends AppCompatActivity {
 
     public String getURL() {
         return imgURL;
+    }
+
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
     }
 
     public static List<DishItem> getDishItem() {

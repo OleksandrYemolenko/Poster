@@ -51,14 +51,14 @@ public class MainActivity extends AppCompatActivity {
                   WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
-       /* TODO add bottom nav view
+       /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbara);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); */
 
         title = "Dishes";
 
-       /* bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -68,11 +68,29 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             }
-        }); */
+        });
 
         setTitle(title);
 
         recView = findViewById(R.id.dishRecView);
+
+        /*recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 && bottomNavigationView.isShown()) {
+                    bottomNavigationView.setVisibility(View.GONE);
+                } else if (dy < 0 ) {
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        }); */
 
         manager = new LinearLayoutManager(this);
 
@@ -113,13 +131,16 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
-            holder.bind(items.get(position));
+            final DishItem dishItem = items.get(position);
+
+            holder.bind(dishItem);
+
             holder.itemView.setOnClickListener (new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
-                    //ChangeActivity(position, items.get(position).getTitle());
-
+                    boolean expanded = dishItem.isExpanded();
+                    dishItem.setExpanded(!expanded);
+                    notifyItemChanged(position);
                 }
             });
         }
@@ -131,27 +152,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+
         private TextView title, price;
         private ImageView image;
+        private View subItem;
 
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            subItem = itemView.findViewById(R.id.sub_item);
             title = (TextView) itemView.findViewById(R.id.title);
             price = (TextView) itemView.findViewById(R.id.price);
             title.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
             price.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
             image = (ImageView) itemView.findViewById(R.id.imgD);
-            //image.setImageResource(R.drawable.no_img); //TODO check it
+            //image.setImageResource(R.drawable.no_img); //
         }
 
         public void bind(DishItem recyclerItem) {
+            boolean expanded = recyclerItem.isExpanded();
+
             title.setText(recyclerItem.getName());
             price.setText(recyclerItem.getPrice());
             Picasso.with(context)
                     .load(recyclerItem.getURL())
-                                         // optional
+                    // optional
                     .into(image);
+
+            subItem.setVisibility(expanded ? View.VISIBLE : View.GONE);
         }
     }
 }
