@@ -3,15 +3,12 @@ package com.codersinlow.poster;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.Image;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,13 +21,14 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-
-
+public abstract class CategoryListActivity extends AppCompatActivity {
     private RecyclerView recView;
     private LinearLayoutManager manager;
     private RecyclerAdapter adapter;
@@ -39,12 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private BottomNavigationView bottomNavigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-       // FirebaseAuth auth = FirebaseAuth.getInstance();
 
           requestWindowFeature(Window.FEATURE_NO_TITLE);
           getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_favorites:
-                        Toast.makeText(MainActivity.this, "action_favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CategoryListActivity.this, "action_favorites", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
@@ -100,18 +95,21 @@ public class MainActivity extends AppCompatActivity {
         adapter.addAll(getDishItem());
     }
 
-    public static List<DishItem> getDishItem() {
-        ArrayList<DishItem> dishList = new ArrayList<>();
+    public List<DishItem> getDishItem() {
+        ArrayList<DishItem> items = new ArrayList<>();
 
+        try {
+            JSONObject obj = new JSONObject(Handler.sendRequest("menu.getCategories", "GET"));
+            JSONArray arr = obj.getJSONArray("response");
+            for(int i = 0; i < arr.length(); ++i) {
+                String name = (String)arr.getJSONObject(i).get("category_name");
+                String photo;
+            }
+        } catch (JSONException e) {
+            System.out.println(e);
+        }
 
-        // TODO Передать в dishList список блюд с именем (title), URL на картинку (imgURL) и ценой (price)
-        dishList.add(new DishItem("Hot Dog", "https://www.micccp.com/wp/wp-content/uploads/2016/02/4111.jpg", "30.00₴", "op"));
-        /*dishList.add(new DishItem("Coffee", "https://million-wallpapers.ru/wallpapers/2/56/294040267495523.jpg", "25.00₴"));
-        dishList.add(new DishItem("Juice", "http://images.media-allrecipes.com/userphotos/960x960/3758394.jpg", "28.00₴"));
-        dishList.add(new DishItem("Pizza", "http://food.studiofact.ru/upload/iblock/706/7062914c3c69c543991a45ca006e456b.jpg", "300.00₴"));
-        dishList.add(new DishItem("Cake", "https://31p86334w2bvkz0249eyr0cr-wpengine.netdna-ssl.com/wp-content/uploads/2013/04/triple-chocolate-cake-4-600x900.jpg", "150.00₴"));
-*/
-        return dishList;
+        return items;
     }
 
   /*  public void ChangeActivity(int pos, String title) {
