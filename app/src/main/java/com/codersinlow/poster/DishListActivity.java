@@ -27,9 +27,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public abstract class CategoryListActivity extends AppCompatActivity {
+public class DishListActivity extends AppCompatActivity {
+    private int category;
+
     private RecyclerView recView;
     private LinearLayoutManager manager;
     private RecyclerAdapter adapter;
@@ -60,7 +61,7 @@ public abstract class CategoryListActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_favorites:
-                        Toast.makeText(CategoryListActivity.this, "action_favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DishListActivity.this, "action_favorites", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
@@ -96,17 +97,20 @@ public abstract class CategoryListActivity extends AppCompatActivity {
         adapter.addAll(getItems());
     }
 
-    public List<CategoryItem> getItems() {
-        ArrayList<CategoryItem> items = new ArrayList<>();
+    public List<DishItem> getItems() {
+        ArrayList<DishItem> items = new ArrayList<>();
 
+        category = intent.getIntExtra("category", 0);
         try {
             JSONObject obj = new JSONObject(Handler.sendRequest("menu.getCategories", "GET"));
             JSONArray arr = obj.getJSONArray("response");
             for(int i = 0; i < arr.length(); ++i) {
-                String name = (String)arr.getJSONObject(i).get("category_name");
-                String photo = (String)arr.getJSONObject(i).get("category_photo");
-                int id = Integer.parseInt((String)arr.getJSONObject(i).get("category_id"));
-                items.add(new CategoryItem(name, photo, id));
+                String name = (String)arr.getJSONObject(i).get("product_name");
+                String photo = (String)arr.getJSONObject(i).get("photo_origin");
+                String price = (String)arr.getJSONObject(i).get("price");
+                int id = Integer.parseInt((String)arr.getJSONObject(i).get("product_id"));
+
+                items.add(new DishItem(name, photo, id, price, ""));
             }
         } catch (JSONException e) {
             System.out.println(e);
@@ -128,9 +132,9 @@ public abstract class CategoryListActivity extends AppCompatActivity {
     } */
 
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
-        ArrayList<CategoryItem> items = new ArrayList<>();
+        ArrayList<DishItem> items = new ArrayList<>();
 
-        public void addAll(List<CategoryItem> items) {
+        public void addAll(List<DishItem> items) {
             int pos = getItemCount();
             this.items.addAll(items);
             notifyItemRangeInserted(pos, this.items.size());
@@ -146,15 +150,16 @@ public abstract class CategoryListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerViewHolder holder, final int position) {
-            final CategoryItem item = items.get(position);
+            final DishItem dishItem = items.get(position);
 
-            holder.bind(item);
+            holder.bind(dishItem);
 
             holder.itemView.setOnClickListener (new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intent.putExtra("category", item.getId());
-                    startActivity(new Intent(context, DishListActivity.class));
+                    boolean expanded = dishItem.isExpanded();
+                    dishItem.setExpanded(!expanded);
+                    notifyItemChanged(position);
                 }
             });
         }
@@ -167,7 +172,7 @@ public abstract class CategoryListActivity extends AppCompatActivity {
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView title, price;
+        private TextView title, price, description;
         private ImageView image;
         private View subItem;
 
@@ -175,19 +180,27 @@ public abstract class CategoryListActivity extends AppCompatActivity {
             super(itemView);
 
             subItem = itemView.findViewById(R.id.sub_item);
+
             title = (TextView) itemView.findViewById(R.id.title);
             price = (TextView) itemView.findViewById(R.id.price);
+            description = (TextView) itemView.findViewById(R.id.description);
+
             title.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
             price.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
+            description.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf"));
+
             image = (ImageView) itemView.findViewById(R.id.imgD);
+
             //image.setImageResource(R.drawable.no_img); //
         }
 
-        public void bind(CategoryItem recyclerItem) {
+        public void bind(DishItem recyclerItem) {
             boolean expanded = recyclerItem.isExpanded();
 
             title.setText(recyclerItem.getName());
-            price.setText("");
+            price.setText(recyclerItem.getPrice());
+            description.setText(recyclerItem.getDescription());
+
             Picasso.with(context).load(recyclerItem.getURL()).into(image);
 
             subItem.setVisibility(expanded ? View.VISIBLE : View.GONE);

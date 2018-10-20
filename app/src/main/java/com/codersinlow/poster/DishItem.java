@@ -5,38 +5,21 @@ import android.media.Image;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DishItem {
-
-    private boolean expanded;
-    private String title;
+public class DishItem extends Item {
     private String price;
-    private String imgURL;
     private String description;
 
-    DishItem(String title, String imgURL, String price, String description) {
-        this.title = title;
+    DishItem(String title, String imgURL, int id, String price, String description) {
+        super(title, imgURL, id);
         this.price = price;
-        this.imgURL = imgURL;
-        // File file = new File(@R.);
+        this.description = description;
     }
 
-    public String getName() {
-        return title;
-    }
     public String getPrice() {
         return price;
     }
 
-    public String getURL() {
-        return imgURL;
-    }
-
-
-    public void setExpanded(boolean expanded) {
-        this.expanded = expanded;
-    }
-
-    public boolean isExpanded() {
-        return expanded;
+    public String getDescription() {
+        return description;
     }
 }

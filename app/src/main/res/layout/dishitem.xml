@@ -67,17 +67,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/sub_item_genre"
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="Genre:  Crime, Drama, Thriller" />
-
-        <TextView
-            android:id="@+id/sub_item_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Year: 1993" />
     </LinearLayout>
 </android.support.v7.widget.CardView>
