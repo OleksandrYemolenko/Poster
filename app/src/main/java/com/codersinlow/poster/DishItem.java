@@ -17,7 +17,6 @@ public class DishItem {
         this.title = title;
         this.price = price;
         this.imgURL = imgURL;
-        this.description = description;
         // File file = new File(@R.);
     }
 
@@ -27,12 +26,11 @@ public class DishItem {
     public String getPrice() {
         return price;
     }
+
     public String getURL() {
         return imgURL;
     }
-    public String getDescription() {
-        return description;
-    }
+
 
     public void setExpanded(boolean expanded) {
         this.expanded = expanded;
