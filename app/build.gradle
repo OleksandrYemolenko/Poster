@@ -33,4 +33,5 @@ dependencies {
     implementation 'com.r0adkll:slidableactivity:2.0.6'
     implementation "com.squareup.picasso:picasso:2.4.0"
     implementation 'com.google.firebase:firebase-auth:16.0.5'
+
 }
