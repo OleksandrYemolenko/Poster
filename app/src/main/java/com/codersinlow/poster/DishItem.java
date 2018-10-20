@@ -11,6 +11,7 @@ public class DishItem {
     private String title;
     private String price;
     private String imgURL;
+    private String description;
 
     DishItem(String title, String imgURL, String price) {
         this.title = title;
